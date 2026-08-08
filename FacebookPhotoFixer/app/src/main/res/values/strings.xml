@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">FB Photo Fixer</string>
+    <string name="app_title">Stop Facebook photos from flooding Google Photos</string>
+
+    <string name="explanation">
+        On Xiaomi devices, Facebook saves photos and videos into
+        DCIM/Facebook, which is inside your camera roll. Google Photos treats
+        that folder as part of your camera roll and backs everything up.
+
+        This app watches that folder in the background and moves anything new
+        into a separate Facebook_Saved folder, deleting the original from
+        DCIM/Facebook so Google Photos never picks it up.
+
+        To do this it needs \"All files access\" — without it, Android blocks
+        apps from deleting files they didn\'t create themselves, which is the
+        \"permission denied\" error you may have hit before.
+    </string>
+
+    <string name="status_checking">Checking permission status…</string>
+    <string name="status_granted">✅ All files access granted. Background job is scheduled and will run every 15 minutes.</string>
+    <string name="status_not_granted">⚠️ All files access not granted yet. The background job cannot move or delete files without it.</string>
+
+    <string name="btn_grant_permission">Grant All Files Access</string>
+    <string name="btn_battery">Disable Battery Optimization For This App</string>
+    <string name="btn_open_security_app">Open MIUI Security App</string>
+
+    <string name="miui_header">MIUI / HyperOS extra steps</string>
+    <string name="miui_steps">
+        Xiaomi\'s MIUI/HyperOS aggressively kills background apps even when a
+        permission is granted. For the background job to survive, also do
+        this once:
+
+        1. Security app → App Battery Saver → find this app → set to
+        \"No restrictions\".
+        2. Security app → Permissions → Autostart → enable Autostart for
+        this app.
+        3. Recent apps screen → swipe this app\'s card down (or tap the lock
+        icon) to lock it so MIUI doesn\'t sweep it away.
+
+        The button below opens the Security app\'s permissions screen where
+        most of this lives; the exact menu wording varies by MIUI version.
+    </string>
+
+    <string name="paths_info">
+        Source: /storage/emulated/0/DCIM/Facebook/
+        Destination: /storage/emulated/0/Facebook_Saved/
+        Interval: every 15 minutes
+    </string>
+</resources>
