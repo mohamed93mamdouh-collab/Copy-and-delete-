@@ -20,20 +20,18 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Make gradlew executable and Build APK
+    - name: Setup Gradle Wrapper and Build APK
       run: |
-        # البحث عن ملف gradlew في أي مكان داخل المستودع واكتشاف المجلد الصحيح
-        GRADLEW_FILE=$(find . -name "gradlew")
-        if [ -z "$GRADLEW_FILE" ]; then
-          echo "خطأ: لم يتم العثور على ملف gradlew، تأكد من رفع محتويات المجلد مفكوكة بشكل صحيح!"
-          exit 1
-        fi
+        # الانتقال إلى مجلد المشروع
+        cd FacebookPhotoFixer
         
-        # الانتقال إلى المجلد الذي يحتوي على مشروع الأندرويد
-        PROJECT_DIR=$(dirname "$GRADLEW_FILE")
-        cd "$PROJECT_DIR"
+        # تثبيت أداة Gradle يدوياً لتعويض الملفات الناقصة في المستودع
+        sudo apt-get update && sudo apt-get install -y gradle
         
-        # منح صلاحيات التشغيل وتنفيذ بناء الـ APK
+        # إنشاء ملفات gradlew المفقودة تلقائياً بالكامل
+        gradle wrapper --gradle-version 8.7
+        
+        # منح الصلاحيات وبدء التجميع الفوري للـ APK
         chmod +x ./gradlew
         ./gradlew assembleDebug --stacktrace
 
@@ -42,4 +40,4 @@ jobs:
       with:
         name: FacebookPhotoFixer-APK
         path: |
-          **/build/outputs/apk/debug/*.apk
+          FacebookPhotoFixer/app/build/outputs/apk/debug/*.apk
