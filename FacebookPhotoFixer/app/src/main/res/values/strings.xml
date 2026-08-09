@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">FB Photo Fixer</string>
+    <string name="app_title">Stop Facebook photos from flooding Google Photos</string>
+
+    <string name="explanation">
+        Facebook saves photos and videos into your phone\'s camera roll
+        folder (DCIM/Facebook on most phones). Google Photos treats that
+        folder as part of your camera roll and backs everything up — often
+        within seconds.
+
+        This app watches that folder in real time and moves each new file
+        into a separate Facebook_Saved folder within milliseconds of it being
+        written, deleting the original from DCIM/Facebook before Google
+        Photos gets a chance to sync it. A small persistent notification
+        keeps this watcher alive; a 15-minute backup check also runs in case
+        the watcher ever gets restarted by the system.
+
+        To do this it needs \"All files access\" — without it, Android blocks
+        apps from deleting files they didn\'t create themselves, which is the
+        \"permission denied\" error you may have hit before.
+    </string>
+
+    <string name="status_checking">Checking permission status…</string>
+    <string name="status_granted">✅ All files access granted. Real-time watcher is active, plus a 15-minute backup sweep.</string>
+    <string name="status_not_granted">⚠️ All files access not granted yet. Nothing can be moved or deleted without it.</string>
+
+    <string name="btn_grant_permission">Grant All Files Access</string>
+    <string name="btn_battery">Disable Battery Optimization For This App</string>
+
+    <string name="paths_info">
+        Source: /storage/emulated/0/DCIM/Facebook/
+        Destination: /storage/emulated/0/Facebook_Saved/
+        Real-time watcher: instant (FileObserver)
+        Backup sweep: every 15 minutes
+    </string>
+
+    <!-- Foreground service notification -->
+    <string name="notif_channel_name">Background photo watcher</string>
+    <string name="notif_channel_desc">Keeps this app alive to instantly move Facebook photos out of your camera roll.</string>
+    <string name="notif_watching">Protecting your storage - Monitoring Facebook downloads…</string>
+    <string name="notif_last_moved">Last moved: %1$s</string>
+
+    <!-- Creator info section -->
+    <string name="creator_section_header">CREATOR INFO</string>
+    <string name="creator_app_name_value">Facebook Photo Fixer · v2.0 (Ultra Instant)</string>
+    <string name="creator_developer_value">Mohamed Mamdouh</string>
+    <string name="creator_developer_subtitle">Creator &amp; Developer</string>
+    <string name="creator_email_label">Contact</string>
+    <string name="creator_email_value">mohamed93mamdouh@gmail.com</string>
+    <string name="creator_github_placeholder">github.com/mohamed93mamdouh-collab</string>
+</resources>
