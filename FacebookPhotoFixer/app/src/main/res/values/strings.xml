@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">FB Photo Fixer</string>
+    <string name="app_title">Stop Facebook photos from flooding Google Photos</string>
+
+    <string name="explanation">
+        On Xiaomi devices, Facebook saves photos and videos into
+        DCIM/Facebook, which is inside your camera roll. Google Photos treats
+        that folder as part of your camera roll and backs everything up --
+        often within seconds.
+
+        This app watches that folder in real time and moves each new file
+        into a separate Facebook_Saved folder within milliseconds of it being
+        written, deleting the original from DCIM/Facebook before Google
+        Photos gets a chance to sync it. A small persistent notification
+        keeps this watcher alive; a 15-minute backup check also runs in case
+        the watcher ever gets restarted by the system.
+
+        To do this it needs \"All files access\" — without it, Android blocks
+        apps from deleting files they didn\'t create themselves, which is the
+        \"permission denied\" error you may have hit before.
+    </string>
+
+    <string name="status_checking">Checking permission status…</string>
+    <string name="status_granted">✅ All files access granted. Real-time watcher is active, plus a 15-minute backup sweep.</string>
+    <string name="status_not_granted">⚠️ All files access not granted yet. Nothing can be moved or deleted without it.</string>
+
+    <string name="btn_grant_permission">Grant All Files Access</string>
+    <string name="btn_battery">Disable Battery Optimization For This App</string>
+    <string name="btn_open_security_app">Open MIUI Security App</string>
+
+    <string name="miui_header">MIUI / HyperOS extra steps</string>
+    <string name="miui_steps">
+        Xiaomi\'s MIUI/HyperOS aggressively kills background apps and
+        services even when permissions are granted. For the watcher to
+        survive, also do this once:
+
+        1. Security app → App Battery Saver → find this app → set to
+        \"No restrictions\".
+        2. Security app → Permissions → Autostart → enable Autostart for
+        this app.
+        3. Recent apps screen → swipe this app\'s card down (or tap the lock
+        icon) to lock it so MIUI doesn\'t sweep it away.
+
+        The button below opens the Security app\'s permissions screen where
+        most of this lives; the exact menu wording varies by MIUI version.
+    </string>
+
+    <string name="paths_info">
+        Source: /storage/emulated/0/DCIM/Facebook/
+        Destination: /storage/emulated/0/Facebook_Saved/
+        Real-time watcher: instant (FileObserver)
+        Backup sweep: every 15 minutes
+    </string>
+
+    <!-- Foreground service notification -->
+    <string name="notif_channel_name">Background photo watcher</string>
+    <string name="notif_channel_desc">Keeps this app alive to instantly move Facebook photos out of your camera roll.</string>
+    <string name="notif_watching">Watching for new Facebook photos…</string>
+    <string name="notif_last_moved">Last moved: %1$s</string>
+</resources>
