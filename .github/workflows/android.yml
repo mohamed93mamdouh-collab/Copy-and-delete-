@@ -20,15 +20,22 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Grant execute permission for gradlew
-      run: cd FacebookPhotoFixer && chmod +x gradlew
-      
-    - name: Build Debug APK
-      run: cd FacebookPhotoFixer && ./gradlew assembleDebug
+    - name: Find Project and Build APK
+      run: |
+        GRADLE_PATH=$(find . -name gradlew)
+        if [ -z "$GRADLE_PATH" ]; then
+          echo "Error: gradlew not found anywhere in the repository!"
+          exit 1
+        fi
+        PROJECT_DIR=$(dirname "$GRADLE_PATH")
+        cd "$PROJECT_DIR"
+        chmod +x ./gradlew
+        ./gradlew assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: FacebookPhotoFixer-APK
-        path: FacebookPhotoFixer/app/build/outputs/apk/debug/app-debug.apk
-        
+        path: |
+          **/build/outputs/apk/debug/*.apk
+          
