@@ -1,0 +1,50 @@
+name: Android Debug APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Every step below runs inside FacebookPhotoFixer/, since that's where
+    # settings.gradle / build.gradle actually live in this repo.
+    defaults:
+      run:
+        working-directory: FacebookPhotoFixer
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Generate Gradle wrapper (gradlew is missing from repo)
+        run: gradle wrapper --gradle-version 8.7
+        working-directory: FacebookPhotoFixer
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+        working-directory: FacebookPhotoFixer
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
+        working-directory: FacebookPhotoFixer
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: FacebookPhotoFixer/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
