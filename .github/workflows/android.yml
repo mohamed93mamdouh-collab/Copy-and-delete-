@@ -20,17 +20,22 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Find Project and Build APK
+    - name: Make gradlew executable and Build APK
       run: |
-        GRADLE_PATH=$(find . -name gradlew)
-        if [ -z "$GRADLE_PATH" ]; then
-          echo "Error: gradlew not found anywhere in the repository!"
+        # البحث عن ملف gradlew في أي مكان داخل المستودع واكتشاف المجلد الصحيح
+        GRADLEW_FILE=$(find . -name "gradlew")
+        if [ -z "$GRADLEW_FILE" ]; then
+          echo "خطأ: لم يتم العثور على ملف gradlew، تأكد من رفع محتويات المجلد مفكوكة بشكل صحيح!"
           exit 1
         fi
-        PROJECT_DIR=$(dirname "$GRADLE_PATH")
+        
+        # الانتقال إلى المجلد الذي يحتوي على مشروع الأندرويد
+        PROJECT_DIR=$(dirname "$GRADLEW_FILE")
         cd "$PROJECT_DIR"
+        
+        # منح صلاحيات التشغيل وتنفيذ بناء الـ APK
         chmod +x ./gradlew
-        ./gradlew assembleDebug
+        ./gradlew assembleDebug --stacktrace
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
@@ -38,4 +43,3 @@ jobs:
         name: FacebookPhotoFixer-APK
         path: |
           **/build/outputs/apk/debug/*.apk
-          
