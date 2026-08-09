@@ -18,20 +18,17 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: gradle
 
-    - name: Setup Gradle Wrapper and Build APK
+    # استخدام أداة جيت هاب الرسمية لإنشاء وضبط الـ Gradle Wrapper تلقائياً وبأعلى توافق
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        build-root-directory: FacebookPhotoFixer
+        gradle-version: 8.7
+
+    - name: Build Debug APK
       run: |
-        # الانتقال إلى مجلد المشروع
         cd FacebookPhotoFixer
-        
-        # تثبيت أداة Gradle يدوياً لتعويض الملفات الناقصة في المستودع
-        sudo apt-get update && sudo apt-get install -y gradle
-        
-        # إنشاء ملفات gradlew المفقودة تلقائياً بالكامل
-        gradle wrapper --gradle-version 8.7
-        
-        # منح الصلاحيات وبدء التجميع الفوري للـ APK
         chmod +x ./gradlew
         ./gradlew assembleDebug --stacktrace
 
